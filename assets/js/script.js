@@ -28,7 +28,7 @@ async function getDataCurrency(currency) {
 async function loadData() {
     try {
         let { uf, dolar, euro, utm } = await getData();
-        document.querySelector("form").addEventListener('submit',  (event) => {
+        document.querySelector("form").addEventListener('submit', (event) => {
             event.preventDefault();
 
             let amount = document.getElementById("amount").value;
@@ -40,6 +40,7 @@ async function loadData() {
             let toDate;
             let fromValue;
             let fromDate;
+            let date;
 
             switch (inputTo) {
                 case 'CLF':
@@ -86,15 +87,19 @@ async function loadData() {
             if (inputFrom === 'CLP' && inputTo !== 'CLP') {
                 let total = formatAmount(inputTo, (amount / toValue));
                 conversion.innerHTML = total;
+                date = toDate;
+
             } else if (inputFrom !== 'CLP' && inputTo === 'CLP') {
-                console.log(fromValue);
                 let total = formatAmount(inputTo, (fromValue * amount));
                 conversion.innerHTML = total;
+                date = fromDate;
+
             } else if (inputFrom !== 'CLP' && inputTo !== 'CLP') {
                 let total = formatAmount(inputTo, (fromValue * amount / toValue));
                 conversion.innerHTML = total;
+                date = toDate;
             }
-            text.innerHTML = `${amount} ${inputFrom} son equivalentes a ${total} al ${toDate.toLocaleDateString()}`;
+            text.innerHTML = `${amount} ${inputFrom} son equivalentes a ${total} al ${date.toLocaleDateString()}`;
         })
 
         document.getElementById("nDolar").innerHTML = dolar.nombre;
@@ -207,7 +212,7 @@ async function loadData() {
                         { label: new Date(dataEuro[1].fecha).toLocaleDateString(), y: dataEuro[1].valor },
                         { label: new Date(dataEuro[0].fecha).toLocaleDateString(), y: dataEuro[0].valor }
                     ]
-                }  
+                }
             ]
         });
 
@@ -326,7 +331,7 @@ async function loadData() {
             chartUtm.render();
         }
 
-        
+
     } catch (error) {
         console.log(error);
     }
