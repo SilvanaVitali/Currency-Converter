@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 const hbs = create({
   helpers: {
     formatDate(date){
-      return moment(date).format('YYYY-MM-DD')
+      return moment(date).format('DD-MM-YYYY')
     }
   }
 })

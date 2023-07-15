@@ -1,0 +1,35 @@
+
+  <form class="row g-5">
+    <div class="col-md-6">
+      <label for="inputFrom" class="form-label">From:</label>
+      <select id="inputFrom" class="form-select" required>
+        <option selected>Select indicator</option>
+        <option value="CLP">PESOS</option>
+        <option value="USD">DOLAR</option>
+        <option value="EUR">EURO</option>
+        <option value="CLF">UF</option>
+        <option value="UTM">UTM</option>
+      </select>
+
+      <label for="amount" class="form-label mt-2">Amount</label>
+      <input type="number" class="form-control" id="amount" step="any" required>
+    </div>
+    <div class="col-md-6">
+      <label for="inputTo" class="form-label">To:</label>
+      <select id="inputTo" class="form-select" required>
+        <option selected>Select indicator</option>
+        <option value="CLP">PESOS</option>
+        <option value="USD">DOLAR</option>
+        <option value="EUR">EURO</option>
+        <option value="CLF">UF</option>
+        <option value="UTM">UTM</option>
+      </select>
+      <p id="conversion" class="fs-1 mt-4 text-center"></p>
+    </div>
+
+    <div id="text" class="form-text"></div>
+    <div class="col-12 mt-4">
+      <button id="convert" type="submit" class="btn btn-primary">Convert</button>
+    </div>
+  </form>
+
