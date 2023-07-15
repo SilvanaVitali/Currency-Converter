@@ -1,35 +1,19 @@
-export const getCurrencies = async (_, res) => {
-  try {
-    const currencies = await fetch('')
-    res.status(200).json(currencies)
-  } catch (error) {
-    res.status(500).json({ message: 'server error' })
-  }
-}
+import { getForex, getCurrencyValue } from "../utils/forex.js";
 
-export const getForex = async () => {
-  try {
-    const result = await fetch('https://mindicador.cl/api');
-    const data = await result.json();
-
-    // Filtra los objetos que deseas mostrar
-    const objetos = {
-      uf: data.uf,
-      ivp: data.ivp,
-      dolar: data.dolar,
-      dolar_intercambio: data.dolar_intercambio,
-      euro: data.euro,
-      ipc: data.ipc,
-      utm: data.utm,
-      imacec: data.imacec,
-      tpm: data.tpm,
-      libra_cobre: data.libra_cobre,
-      tasa_desempleo: data.tasa_desempleo,
-      bitcoin: data.bitcoin
-    };
-    
-    if(data) return objetos
-  } catch (error) {
-    return error.message
+export const convertAmount = async (_, res) => {
+  const { amount, inputTo, inputForm } = _.body
+  const { dolar_intercambio, euro, uf, utm } = await getForex();
+  let result;
+  console.log(inputForm)
+  // Obtener los valores de las monedas de origen y destino
+  const fromCurrency = await getCurrencyValue(inputForm);
+  const toCurrency = await getCurrencyValue(inputTo);
+  console.log(fromCurrency, toCurrency)
+  if (fromCurrency && toCurrency) {
+    result = ((amount / fromCurrency) * parseFloat(toCurrency)).toFixed(2);
+  } else {
+    return res.status(400).json({ error: 'Moneda no válida' });
   }
+
+  return res.json({ result, fromCurrency, toCurrency });
 }

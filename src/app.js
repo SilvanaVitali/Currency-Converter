@@ -6,8 +6,8 @@ import moment from 'moment/moment.js'
 
 const app = express()
 
-app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 const hbs = create({
   helpers: {

@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { getCurrencies, getForex } from '../controllers/currencyController.js'
+import { convertAmount} from '../controllers/currencyController.js'
+import { getForex } from '../utils/forex.js'
 const router = Router()
 
 router.get('/', async (_, res) => {
@@ -7,7 +8,6 @@ router.get('/', async (_, res) => {
   res.render('index', { objetos })
 })
 
-router.get('/index', getCurrencies)
-router.get('/forex', getForex)
+router.post('/getConvert', convertAmount)
 
 export default router
