@@ -1,0 +1,64 @@
+
+  <form class="row g-5"  method="post">
+    <div class="col-md-6">
+      <label for="inputFrom" class="form-label">From:</label>
+      <select id="inputForm" class="form-select" name="inputForm" required>
+        <option selected>Select indicator</option>
+        <option value="peso">PESOS</option>
+        <option value="dolar_intercambio">DOLAR</option>
+        <option value="euro">EURO</option>
+        <option value="uf">UF</option>
+        <option value="utm">UTM</option>
+      </select>
+
+      <label for="amount" class="form-label mt-2">Amount</label>
+      <input type="number" class="form-control" id="amount" step="any" name="amount" required>
+    </div>
+    <div class="col-md-6">
+      <label for="inputTo" class="form-label">To:</label>
+      <select id="inputTo" class="form-select" name="inputTo" required>
+        <option selected>Select indicator</option>
+        <option value="peso">PESOS</option>
+        <option value="dolar_intercambio">DOLAR</option>
+        <option value="euro">EURO</option>
+        <option value="uf">UF</option>
+        <option value="utm">UTM</option>
+      </select>
+      <p id="conversion" class="fs-1 mt-4 text-center"></p>
+    </div>
+
+    <div id="result"></div>
+    <div class="col-12 mt-4">
+      <button id="convert" type="submit" name="submit" value="submit" class="btn btn-primary">Convert</button>
+    </div>
+  </form>
+
+<script>
+  document.querySelector('form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Evitar el envío del formulario
+
+  // Obtener los valores del formulario
+  const amount = parseFloat(document.querySelector('#amount').value);
+  const inputForm = document.querySelector('#inputForm').value;
+  const inputTo = document.querySelector('#inputTo').value;
+
+  // Realizar la solicitud utilizando fetch
+  fetch('/getConvert', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ amount, inputForm, inputTo })
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Manipular el DOM para mostrar el resultado
+    document.querySelector('#result').textContent = 'Resultado: ' + data.result;
+  })
+  .catch(error => {
+    console.log('Error:', error);
+  });
+});
+</script>
+ 
+

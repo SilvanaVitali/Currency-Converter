@@ -1,0 +1,30 @@
+import express from 'express'
+import currencyRoutes from './routes/currency.routes.js'
+import { create } from 'express-handlebars'
+import path from 'path'
+import moment from 'moment/moment.js'
+
+const app = express()
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
+const hbs = create({
+  helpers: {
+    formatDate(date){
+      return moment(date).format('DD-MM-YYYY')
+    }
+  }
+})
+
+app.engine('handlebars', hbs.engine)
+app.set('view engine', 'handlebars')
+app.set('views', path.resolve('src/views'))
+
+app.use('/', currencyRoutes)
+
+app.all('*', (_, res) => {
+  res.status(404).send('404 - Route Not Found')
+})
+
+export default app

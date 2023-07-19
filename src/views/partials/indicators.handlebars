@@ -1,0 +1,21 @@
+
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Indicator</th>
+                <th scope="col">Value (pesos)</th>
+                <th scope="col">Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each objetos}}
+            <tr>
+                <td id="n{{@key}}">{{@key}}</td>
+                <td id="v{{@key}}">$ {{this.valor}}</td>
+                <td id="d{{@key}}">{{formatDate this.fecha}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+
